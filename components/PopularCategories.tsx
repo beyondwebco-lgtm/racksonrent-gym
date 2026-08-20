@@ -1,86 +1,66 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import {
-  ArrowRight,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { POPULAR_CATEGORIES, CategoryItem } from "@/data/categories";
 
 export default function PopularCategories() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const [isDragging, setIsDragging] = useState(false);
-  const [hasDragged, setHasDragged] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeftPos, setScrollLeftPos] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
-  const updateScrollButtons = useCallback(() => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 5);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
-    }
-  }, []);
+  const totalItems = POPULAR_CATEGORIES.length;
 
+  // Loop forward
+  const nextSlide = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % totalItems);
+  }, [totalItems]);
+
+  // Loop backward
+  const prevSlide = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + totalItems) % totalItems);
+  }, [totalItems]);
+
+  // Autoplay & Hover Control (4.5 Seconds)
   useEffect(() => {
-    const scrollEl = scrollRef.current;
-    if (scrollEl) {
-      updateScrollButtons();
-      scrollEl.addEventListener("scroll", updateScrollButtons, { passive: true });
-      window.addEventListener("resize", updateScrollButtons);
-      return () => {
-        scrollEl.removeEventListener("scroll", updateScrollButtons);
-        window.removeEventListener("resize", updateScrollButtons);
-      };
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isPaused, nextSlide]);
+
+  // Mobile Touch & Swipe Gestures (40px Threshold)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffDistance = touchStartX - touchEndX;
+
+    if (diffDistance > 40) {
+      nextSlide(); // Swipe Left -> Next
+    } else if (diffDistance < -40) {
+      prevSlide(); // Swipe Right -> Previous
     }
-  }, [updateScrollButtons]);
-
-  const handleScroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const cardElement = scrollRef.current.querySelector(".category-card");
-      const cardWidth = cardElement ? (cardElement as HTMLElement).offsetWidth : 280;
-      const gap = 20;
-      const scrollAmount = (cardWidth + gap) * (window.innerWidth >= 1024 ? 2 : 1);
-
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
+    setTouchStartX(null);
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollRef.current) return;
-    setIsDragging(true);
-    setHasDragged(false);
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeftPos(scrollRef.current.scrollLeft);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    if (Math.abs(walk) > 5) {
-      setHasDragged(true);
-    }
-    scrollRef.current.scrollLeft = scrollLeftPos - walk;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleCategoryClick = () => {
-    if (hasDragged) return;
-    const element = document.getElementById("contact");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  // Interactive Features & Smooth Scroll
+  const handleCardClick = (diff: number) => {
+    if (diff === 0) {
+      // Clicking active card scrolls to contact section
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: "smooth" });
+      }
+    } else if (diff === 1) {
+      nextSlide();
+    } else if (diff === -1) {
+      prevSlide();
     }
   };
 
@@ -89,7 +69,7 @@ export default function PopularCategories() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <span className="inline-flex rounded-full bg-[#FFF6A3] px-4 py-1.5 text-sm font-bold text-[#6B0F1A] border border-[#F0E2E4]">
             Product Placement Categories
           </span>
@@ -101,20 +81,20 @@ export default function PopularCategories() {
           </p>
         </div>
 
-        {/* Horizontal Carousel Container with Side Control Buttons */}
-        <div className="relative group/carousel px-2 sm:px-4">
-          
+        {/* 3D Coverflow Container */}
+        <div
+          className="relative max-w-5xl mx-auto px-2 sm:px-4"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           {/* Left Arrow Button */}
           <button
             type="button"
-            onClick={() => handleScroll("left")}
-            disabled={!canScrollLeft}
-            aria-label="Previous categories"
-            className={`absolute -left-2 sm:left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#6B0F1A] text-[#FFF6A3] border-2 border-[#F7E200] flex items-center justify-center shadow-lg transition-all cursor-pointer ${
-              !canScrollLeft
-                ? "opacity-30 cursor-not-allowed pointer-events-none"
-                : "hover:bg-[#3D0710] hover:text-[#F7E200] hover:scale-105"
-            }`}
+            onClick={prevSlide}
+            aria-label="Previous category"
+            className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-[#6B0F1A] text-[#FFF6A3] border-2 border-[#F7E200] flex items-center justify-center shadow-lg transition-all cursor-pointer hover:bg-[#3D0710] hover:text-[#F7E200] hover:scale-110 active:scale-95"
           >
             <ChevronLeft className="w-6 h-6 stroke-[3]" />
           </button>
@@ -122,74 +102,113 @@ export default function PopularCategories() {
           {/* Right Arrow Button */}
           <button
             type="button"
-            onClick={() => handleScroll("right")}
-            disabled={!canScrollRight}
-            aria-label="Next categories"
-            className={`absolute -right-2 sm:right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#6B0F1A] text-[#FFF6A3] border-2 border-[#F7E200] flex items-center justify-center shadow-lg transition-all cursor-pointer ${
-              !canScrollRight
-                ? "opacity-30 cursor-not-allowed pointer-events-none"
-                : "hover:bg-[#3D0710] hover:text-[#F7E200] hover:scale-105"
-            }`}
+            onClick={nextSlide}
+            aria-label="Next category"
+            className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-[#6B0F1A] text-[#FFF6A3] border-2 border-[#F7E200] flex items-center justify-center shadow-lg transition-all cursor-pointer hover:bg-[#3D0710] hover:text-[#F7E200] hover:scale-110 active:scale-95"
           >
             <ChevronRight className="w-6 h-6 stroke-[3]" />
           </button>
 
-          {/* Carousel Track */}
-          <div
-            ref={scrollRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            className={`flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth py-4 px-4 sm:px-8 select-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${
-              isDragging ? "cursor-grabbing" : "cursor-grab"
-            }`}
-          >
-            {POPULAR_CATEGORIES.map((cat: CategoryItem) => {
+          {/* 3D Coverflow Stage */}
+          <div className="relative h-[440px] sm:h-[480px] w-full flex items-center justify-center overflow-hidden sm:overflow-visible">
+            {POPULAR_CATEGORIES.map((cat: CategoryItem, index: number) => {
+              let diff = index - activeIndex;
+
+              // Handle circular wrapping for continuous loop
+              if (diff > totalItems / 2) {
+                diff -= totalItems;
+              } else if (diff < -totalItems / 2) {
+                diff += totalItems;
+              }
+
+              // Display only Active (0), Previous (-1), and Next (1) cards
+              if (Math.abs(diff) > 1) {
+                return null;
+              }
+
+              const isCentered = diff === 0;
+              const translateXVal = diff * 75;
+              const scaleVal = isCentered ? 1 : 0.35;
+              const opacityVal = isCentered ? 1 : 0.5;
+              const filterVal = isCentered ? "blur(0px)" : "blur(4px)";
+              const zIndexVal = isCentered ? 30 : 10;
+
               return (
-                <button
-                  type="button"
+                <div
                   key={cat.id}
-                  onClick={handleCategoryClick}
-                  className="category-card flex-shrink-0 w-[82vw] max-w-[290px] sm:w-[calc(50%-10px)] md:w-[calc(33.333%-14px)] lg:w-[calc(25%-15px)] snap-start text-left rounded-3xl border-2 border-[#6B0F1A]/15 bg-[#FFFDF5] p-4 shadow-[0_8px_25px_rgba(107,15,26,0.06)] hover:shadow-[0_18px_45px_rgba(107,15,26,0.16)] hover:border-[#6B0F1A] transition-all hover:-translate-y-1 flex flex-col justify-between group cursor-pointer relative overflow-hidden h-full"
+                  onClick={() => handleCardClick(diff)}
+                  className={`absolute top-1/2 left-1/2 w-[280px] sm:w-[320px] md:w-[350px] rounded-3xl border-2 border-[#6B0F1A]/15 bg-[#FFFDF5] p-4 sm:p-5 shadow-[0_10px_30px_rgba(107,15,26,0.12)] cursor-pointer select-none transition-all duration-600 ease-in-out group ${
+                    isCentered
+                      ? "hover:shadow-[0_20px_50px_rgba(107,15,26,0.22)] border-[#6B0F1A]"
+                      : "hover:opacity-75"
+                  }`}
+                  style={{
+                    transform: `translate(-50%, -50%) translateX(${translateXVal}%) scale(${scaleVal})`,
+                    opacity: opacityVal,
+                    filter: filterVal,
+                    zIndex: zIndexVal,
+                    transition:
+                      "transform 600ms ease, opacity 600ms ease, filter 600ms ease, box-shadow 300ms ease",
+                  }}
                 >
                   <div>
-                    {/* Clean Studio Product Photo Container (1:1 Aspect Ratio) */}
-                    <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-[#FFFDF5] border border-[#F0E2E4] mb-4 flex items-center justify-center group-hover:scale-[1.02] transition-transform">
-
+                    {/* Card Image Container */}
+                    <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-[#FFFDF5] border border-[#F0E2E4] mb-3 sm:mb-4 flex items-center justify-center">
                       <Image
                         src={cat.image}
                         alt={cat.alt}
                         fill
-                        sizes="(max-width: 640px) 280px, 300px"
+                        sizes="(max-width: 640px) 280px, 350px"
                         loading="lazy"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
+                      {cat.badge && (
+                        <span className="absolute top-3 right-3 bg-[#6B0F1A] text-[#FFF6A3] text-xs font-bold px-2.5 py-1 rounded-full shadow-md border border-[#F7E200]/40">
+                          {cat.badge}
+                        </span>
+                      )}
                     </div>
 
                     <div className="px-1">
-                      <h3 className="font-extrabold text-base text-[#6B0F1A] leading-snug group-hover:text-[#3D0710] transition-colors mb-1">
+                      <h3 className="font-extrabold text-base sm:text-lg text-[#6B0F1A] leading-snug mb-1 group-hover:text-[#3D0710] transition-colors">
                         {cat.name}
                       </h3>
 
-                      <p className="text-xs text-[#5F5F5F] leading-relaxed font-medium line-clamp-2">
+                      <p className="text-xs sm:text-sm text-[#5F5F5F] leading-relaxed font-medium line-clamp-2">
                         {cat.description}
                       </p>
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-[#F0E2E4] px-1 flex items-center justify-between text-xs font-extrabold text-[#6B0F1A] group-hover:text-[#3D0710]">
+                  <div className="mt-3 sm:mt-4 pt-3 border-t border-[#F0E2E4] px-1 flex items-center justify-between text-xs sm:text-sm font-extrabold text-[#6B0F1A] group-hover:text-[#3D0710]">
                     <span>Explore Spaces</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
-                </button>
+                </div>
               );
             })}
           </div>
 
+          {/* Pagination Indicators */}
+          <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8">
+            {POPULAR_CATEGORIES.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setActiveIndex(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  activeIndex === idx
+                    ? "w-8 bg-[#6B0F1A]"
+                    : "w-2.5 bg-[#6B0F1A]/25 hover:bg-[#6B0F1A]/50"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
       </div>
     </section>
   );
 }
+
