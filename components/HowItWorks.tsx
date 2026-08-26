@@ -1,5 +1,6 @@
 import React from "react";
 import { PlusCircle, Search, Handshake, TrendingUp, ArrowRight } from "lucide-react";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export default function HowItWorks() {
   const steps = [
@@ -34,17 +35,11 @@ export default function HowItWorks() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="inline-flex rounded-full bg-[#FFFDF5] px-4 py-1.5 text-sm font-bold text-[#6B0F1A] border border-[#F0E2E4]">
-            4-Step Process
-          </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#6B0F1A] md:text-5xl">
-            How It Works
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#5F5F5F] md:text-lg font-medium">
-            Four simple steps to connect gym owners with nutrition, health, and wellness providers.
-          </p>
-        </div>
+        <SectionHeader
+          badge="4-Step Process"
+          title="How It Works"
+          subtitle="Four simple steps to connect gym owners with nutrition, health, and wellness providers."
+        />
 
         {/* 4 Step Cards with Desktop Arrows */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">

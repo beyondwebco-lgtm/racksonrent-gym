@@ -1,6 +1,7 @@
 import React from "react";
 import { Layers, Grid, Store, Coffee, Gift, Box } from "lucide-react";
 import { COMPACT_SPACE_TYPES } from "@/data/spaceTypes";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export default function SpaceTypes() {
   const iconMap: Record<string, React.ReactNode> = {
@@ -17,17 +18,11 @@ export default function SpaceTypes() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex rounded-full bg-[#FFFDF5] px-4 py-1.5 text-sm font-bold text-[#6B0F1A] border border-[#F0E2E4]">
-            Available Formats
-          </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#6B0F1A] md:text-5xl">
-            What Kind of Space Can Be Offered?
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#5F5F5F] md:text-lg font-medium">
-            Explore popular gym space options that suit display racks, shelves, counters, and kiosks.
-          </p>
-        </div>
+        <SectionHeader
+          badge="Available Formats"
+          title="What Kind of Space Can Be Offered?"
+          subtitle="Explore popular gym space options that suit display racks, shelves, counters, and kiosks."
+        />
 
         {/* Compact Grid with 6 items */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">

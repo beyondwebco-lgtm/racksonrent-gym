@@ -3,6 +3,7 @@
 import React from "react";
 import { CheckCircle2, Dumbbell, Store } from "lucide-react";
 import { PRICING_TIERS, PricingTier } from "@/data/pricing";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 interface PricingProps {
   onSelectRole?: (role: "gym-owner" | "wellness") => void;
@@ -24,17 +25,11 @@ export default function Pricing({ onSelectRole }: PricingProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex rounded-full bg-[#FFF6A3] px-4 py-1.5 text-sm font-bold text-[#6B0F1A] border border-[#F0E2E4]">
-            Transparent Pricing
-          </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#6B0F1A] md:text-5xl">
-            Simple & Transparent Options
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#5F5F5F] md:text-lg font-medium">
-            No hidden commissions. Direct, transparent terms tailored for gym owners and wellness brands.
-          </p>
-        </div>
+        <SectionHeader
+          badge="Transparent Pricing"
+          title="Simple & Transparent Options"
+          subtitle="No hidden commissions. Direct, transparent terms tailored for gym owners and wellness brands."
+        />
 
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">

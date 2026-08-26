@@ -1,6 +1,7 @@
 import React from "react";
 import { ShieldCheck, Lock, Headphones, TrendingUp } from "lucide-react";
 import { WHY_CHOOSE_US } from "@/data/benefits";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export default function WhyChooseUs() {
   const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -15,17 +16,11 @@ export default function WhyChooseUs() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex rounded-full bg-[#FFF6A3] px-4 py-1.5 text-sm font-bold text-[#6B0F1A] border border-[#F0E2E4]">
-            Platform Advantages
-          </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#6B0F1A] md:text-5xl">
-            Why Choose Racks on Rent?
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#5F5F5F] md:text-lg font-medium">
-            We provide a transparent, dedicated platform designed to simplify fitness space subletting.
-          </p>
-        </div>
+        <SectionHeader
+          badge="Platform Advantages"
+          title="Why Choose Racks on Rent?"
+          subtitle="We provide a transparent, dedicated platform designed to simplify fitness space subletting."
+        />
 
         {/* 4 Benefit Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

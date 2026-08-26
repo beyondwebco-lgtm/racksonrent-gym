@@ -27,6 +27,7 @@ import {
   SHOWCASE_TRUST_ITEMS,
   ShowcaseCategory,
 } from "@/data/showcase";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 interface GymSpaceShowcaseProps {
   onSelectCategoryAction?: (
@@ -156,18 +157,16 @@ export default function GymSpaceShowcase({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <span className="inline-flex rounded-full bg-[#FFF6A3] px-4 py-1.5 text-xs sm:text-sm font-bold text-[#6B0F1A] border border-[#F0E2E4]">
-            Gym Space Opportunities
-          </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#6B0F1A] md:text-5xl">
-            <span className="hidden sm:inline">Choose What You Want to Place Inside a Gym</span>
-            <span className="sm:hidden">Explore Gym Space Formats</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#5F5F5F] md:text-lg font-medium">
-            Explore premium rack, kiosk, counter, and service-space formats designed for nutrition, fitness, recovery, apparel, and healthy lifestyle businesses.
-          </p>
-        </div>
+        <SectionHeader
+          badge="Gym Space Opportunities"
+          title={
+            <>
+              <span className="hidden sm:inline">Choose What You Want to Place Inside a Gym</span>
+              <span className="sm:hidden">Explore Gym Space Formats</span>
+            </>
+          }
+          subtitle="Explore premium rack, kiosk, counter, and service-space formats designed for nutrition, fitness, recovery, apparel, and healthy lifestyle businesses."
+        />
 
         {/* Category Tab Bar (Horizontally Scrollable on Mobile) */}
         <div className="mb-10 flex items-center justify-center">

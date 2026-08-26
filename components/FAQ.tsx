@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { EIGHT_FAQS } from "@/data/faqs";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export default function FAQ() {
   const [openId, setOpenId] = useState<string | null>("faq-1");
@@ -16,17 +17,11 @@ export default function FAQ() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex rounded-full bg-[#FFF6A3] px-4 py-1.5 text-sm font-bold text-[#6B0F1A] border border-[#F0E2E4]">
-            Got Questions?
-          </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#6B0F1A] md:text-5xl">
-            Frequently Asked Questions
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#5F5F5F] md:text-lg font-medium">
-            Everything you need to know about the Racks on Rent platform and space sharing process.
-          </p>
-        </div>
+        <SectionHeader
+          badge="Got Questions?"
+          title="Frequently Asked Questions"
+          subtitle="Everything you need to know about the Racks on Rent platform and space sharing process."
+        />
 
         {/* 8 Accessible FAQ Accordion with Smooth Grid Expansion */}
         <div className="space-y-4 max-w-3xl mx-auto">

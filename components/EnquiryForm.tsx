@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Dumbbell, Store, HelpCircle, MessageCircle, CheckCircle2, AlertCircle } from "lucide-react";
 import { SITE_CONFIG } from "@/data/config";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 type RoleType = "gym-owner" | "wellness" | "general";
 
@@ -111,17 +112,11 @@ ${detailsText}`;
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <span className="inline-flex rounded-full bg-[#FFF6A3] px-4 py-1.5 text-sm font-bold text-[#6B0F1A] border border-[#F0E2E4]">
-            Get In Touch
-          </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#6B0F1A] md:text-5xl">
-            Tell Us What You Are Looking For
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#5F5F5F] md:text-lg font-medium">
-            Choose your role, enter a few details, and continue the conversation on WhatsApp.
-          </p>
-        </div>
+        <SectionHeader
+          badge="Get In Touch"
+          title="Tell Us What You Are Looking For"
+          subtitle="Choose your role, enter a few details, and continue the conversation on WhatsApp."
+        />
 
         <div className="max-w-3xl mx-auto">
           {/* Role Selector Tabs */}

@@ -3,6 +3,7 @@
 import React from "react";
 import { CheckCircle2, Dumbbell, Store } from "lucide-react";
 import { ROLE_CARDS } from "@/data/benefits";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 interface RoleSelectionProps {
   onSelectRole?: (role: "gym-owner" | "wellness") => void;
@@ -24,14 +25,10 @@ export default function RoleSelection({ onSelectRole }: RoleSelectionProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex rounded-full bg-[#FFF6A3] px-4 py-1.5 text-sm font-bold text-[#6B0F1A] border border-[#F0E2E4]">
-            Role Selection
-          </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#6B0F1A] md:text-5xl">
-            Choose What Best Describes You
-          </h2>
-        </div>
+        <SectionHeader
+          badge="Role Selection"
+          title="Choose What Best Describes You"
+        />
 
         {/* Two Large Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">

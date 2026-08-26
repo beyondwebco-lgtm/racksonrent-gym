@@ -15,6 +15,7 @@ import {
   Store,
   Compass,
 } from "lucide-react";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export default function AboutUs() {
   const coreValues = [
@@ -77,20 +78,19 @@ export default function AboutUs() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFF6A3] px-4 py-1.5 text-xs sm:text-sm font-bold text-[#6B0F1A] border border-[#F0E2E4]">
-            <Sparkles className="w-3.5 h-3.5 text-[#6B0F1A]" />
-            <span>India&apos;s First Commercial Display Space Marketplace</span>
-          </span>
-          
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-[#6B0F1A] md:text-5xl leading-tight">
-            About <span className="bg-[#F7E200] text-[#3D0710] px-3 py-0.5 rounded-xl inline-block border border-[#6B0F1A]/20">Racks on Rent</span>
-          </h2>
-          
-          <p className="mt-4 text-lg font-bold text-[#3D0710] sm:text-xl">
-            Transforming Unused Commercial Space into Business Opportunities
-          </p>
-        </div>
+        <SectionHeader
+          badge="India's First Commercial Display Space Marketplace"
+          title={
+            <>
+              About{" "}
+              <span className="bg-[#F7E200] text-[#3D0710] px-3 py-0.5 rounded-xl inline-block border border-[#6B0F1A]/20">
+                Racks on Rent
+              </span>
+            </>
+          }
+          subtitle="Transforming Unused Commercial Space into Business Opportunities"
+          subtitleClassName="text-[#3D0710] font-bold text-lg sm:text-xl"
+        />
 
         {/* Intro Story Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 items-stretch">
