@@ -167,31 +167,23 @@ export default function PopularCategories() {
                     </span>
                   )}
 
-                  {/* Clean Translucent Bottom Overlay Bar for Title & Explore Spaces */}
-                  <div className="absolute inset-x-3.5 bottom-3.5 z-20">
+                  {/* Bottom Overlay for Title & Explore Spaces */}
+                  <div className="absolute inset-x-3 bottom-3.5 z-20 flex flex-col items-center text-center gap-1.5 pointer-events-none">
+                    {/* Main Title (Top - Decreased size, clean text without colored box) */}
+                    <h3 className="font-black text-xs sm:text-sm text-[#1F1F1F] bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full border border-[#F0E2E4] shadow-xs leading-tight line-clamp-1 pointer-events-auto">
+                      {cat.name}
+                    </h3>
+
+                    {/* Explore Spaces Action (Bottom - Compact with background color) */}
                     <div
-                      className={`backdrop-blur-md border shadow-xl rounded-2xl p-3 sm:p-3.5 flex flex-col items-center text-center gap-2 transition-all duration-300 ${
+                      className={`pointer-events-auto py-1.5 px-3.5 rounded-full text-[10px] sm:text-xs font-black transition-all duration-200 shadow-md flex items-center justify-center gap-1 cursor-pointer ${
                         isMaroon
-                          ? "bg-[#6B0F1A]/95 text-white border-white/20"
-                          : "bg-[#F7E200]/95 text-[#6B0F1A] border-[#6B0F1A]/30"
+                          ? "bg-[#6B0F1A] text-[#FFF6A3] border border-[#F7E200]/40 hover:bg-[#3D0710] hover:text-[#F7E200]"
+                          : "bg-[#3D0710] text-[#F7E200] border border-[#F7E200]/30 hover:bg-[#6B0F1A]"
                       }`}
                     >
-                      {/* Main Title (Top) */}
-                      <h3 className="font-black text-sm sm:text-base leading-tight">
-                        {cat.name}
-                      </h3>
-
-                      {/* Explore Spaces Action (Bottom) */}
-                      <div
-                        className={`w-full py-2 px-3 rounded-xl text-xs sm:text-sm font-black transition-all duration-200 shadow-xs flex items-center justify-center gap-1.5 ${
-                          isMaroon
-                            ? "bg-[#F7E200] text-[#6B0F1A] hover:bg-white"
-                            : "bg-[#6B0F1A] text-[#FFF6A3] hover:bg-[#3D0710]"
-                        }`}
-                      >
-                        <span>Explore Spaces</span>
-                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                      </div>
+                      <span>Explore Spaces</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
                 </div>
