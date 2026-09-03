@@ -97,7 +97,7 @@ export default function Header({ onSelectRole }: HeaderProps) {
           {/* Square Rack-Icon Logo */}
           <div className="relative w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-xl overflow-hidden flex-shrink-0 bg-white p-0.5 border border-[#6B0F1A]/20 shadow-2xs group-hover:scale-[1.03] transition-transform">
             <Image
-              src="/images/logo.png"
+              src="/images/navbar-logo.jpeg"
               alt="Racks on Rent Logo Icon"
               fill
               sizes="(max-width: 640px) 44px, (max-width: 1024px) 52px, 56px"
@@ -192,7 +192,7 @@ export default function Header({ onSelectRole }: HeaderProps) {
             >
               <div className="relative w-10 h-10 rounded-xl overflow-hidden flex-shrink-0 bg-white p-0.5 border border-[#6B0F1A]/20">
                 <Image
-                  src="/images/logo.png"
+                  src="/images/navbar-logo.jpeg"
                   alt="Racks on Rent Logo"
                   fill
                   sizes="40px"

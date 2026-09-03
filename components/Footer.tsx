@@ -20,7 +20,7 @@ export default function Footer() {
           >
             <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden flex-shrink-0 bg-white p-0.5 border border-[#F7E200]/60 shadow-md transition-transform group-hover:scale-105">
               <Image
-                src="/images/logo.png"
+                src="/images/navbar-logo.jpeg"
                 alt="Racks on Rent Logo Icon"
                 fill
                 sizes="(max-width: 640px) 48px, 56px"
