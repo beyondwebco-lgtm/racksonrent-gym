@@ -39,12 +39,25 @@ export const metadata: Metadata = {
   authors: [{ name: "Racks on Rent", url: SITE_CONFIG.domain }],
   creator: "Racks on Rent",
   publisher: "Racks on Rent",
+  icons: {
+    icon: "/icon.jpeg",
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.jpeg",
+  },
   openGraph: {
     title: "Racks on Rent | Gym Space for Wellness Brands",
     description:
       "Racks on Rent connects gym owners with nutrition, fitness, and wellness businesses looking for simple display-space opportunities inside gyms.",
     url: SITE_CONFIG.domain,
     siteName: "Racks on Rent",
+    images: [
+      {
+        url: "/opengraph-image.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Racks on Rent Gym Display Space",
+      },
+    ],
     locale: "en_IN",
     type: "website",
   },
