@@ -166,29 +166,29 @@ export default function PopularCategories() {
                   )}
 
                   {/* Clean Translucent Bottom Overlay Bar for Title & Explore Spaces */}
-                  <div className="absolute inset-x-3 bottom-3 z-20">
+                  <div className="absolute inset-x-3.5 bottom-3.5 z-20">
                     <div
-                      className={`backdrop-blur-md border shadow-lg rounded-2xl p-3 flex items-center justify-between gap-2.5 transition-all duration-300 ${
+                      className={`backdrop-blur-md border shadow-lg rounded-2xl p-3 sm:p-3.5 flex flex-col items-center text-center gap-2 transition-all duration-300 ${
                         isMaroon
                           ? "bg-[#6B0F1A]/92 text-white border-white/20"
                           : "bg-[#F7E200]/95 text-[#6B0F1A] border-[#6B0F1A]/30"
                       }`}
                     >
-                      {/* Main Title */}
-                      <h3 className="font-black text-sm sm:text-base leading-tight truncate">
+                      {/* Main Title (Top) */}
+                      <h3 className="font-black text-sm sm:text-base leading-tight">
                         {cat.name}
                       </h3>
 
-                      {/* Explore Spaces Action */}
+                      {/* Explore Spaces Action (Bottom) */}
                       <div
-                        className={`shrink-0 text-xs font-black px-3 py-1.5 rounded-xl transition-all duration-200 shadow-xs flex items-center gap-1.5 ${
+                        className={`w-full py-2 px-3 rounded-xl text-xs font-black transition-all duration-200 shadow-xs flex items-center justify-center gap-1.5 ${
                           isMaroon
                             ? "bg-[#F7E200] text-[#6B0F1A] hover:bg-white"
                             : "bg-[#6B0F1A] text-[#FFF6A3] hover:bg-[#3D0710]"
                         }`}
                       >
                         <span>Explore Spaces</span>
-                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                       </div>
                     </div>
                   </div>
