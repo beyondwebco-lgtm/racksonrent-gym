@@ -78,7 +78,7 @@ export default function PopularCategories() {
 
         {/* 3D Coverflow Container */}
         <div
-          className="relative max-w-5xl mx-auto px-2 sm:px-4"
+          className="relative max-w-6xl mx-auto px-2 sm:px-4"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={handleTouchStart}
@@ -89,7 +89,7 @@ export default function PopularCategories() {
             type="button"
             onClick={prevSlide}
             aria-label="Previous category"
-            className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-[#6B0F1A] text-[#FFF6A3] border-2 border-[#F7E200] flex items-center justify-center shadow-lg transition-all cursor-pointer hover:bg-[#3D0710] hover:text-[#F7E200] hover:scale-110 active:scale-95"
+            className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-[#6B0F1A] text-[#FFF6A3] border-2 border-[#F7E200] flex items-center justify-center shadow-xl transition-all cursor-pointer hover:bg-[#3D0710] hover:text-[#F7E200] hover:scale-110 active:scale-95"
           >
             <ChevronLeft className="w-6 h-6 stroke-[3]" />
           </button>
@@ -99,13 +99,13 @@ export default function PopularCategories() {
             type="button"
             onClick={nextSlide}
             aria-label="Next category"
-            className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-[#6B0F1A] text-[#FFF6A3] border-2 border-[#F7E200] flex items-center justify-center shadow-lg transition-all cursor-pointer hover:bg-[#3D0710] hover:text-[#F7E200] hover:scale-110 active:scale-95"
+            className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-[#6B0F1A] text-[#FFF6A3] border-2 border-[#F7E200] flex items-center justify-center shadow-xl transition-all cursor-pointer hover:bg-[#3D0710] hover:text-[#F7E200] hover:scale-110 active:scale-95"
           >
             <ChevronRight className="w-6 h-6 stroke-[3]" />
           </button>
 
           {/* 3D Coverflow Stage */}
-          <div className="relative h-[460px] sm:h-[520px] w-full flex items-center justify-center overflow-hidden sm:overflow-visible">
+          <div className="relative h-[520px] sm:h-[600px] md:h-[640px] w-full flex items-center justify-center overflow-hidden sm:overflow-visible">
             {POPULAR_CATEGORIES.map((cat: CategoryItem, index: number) => {
               let diff = index - activeIndex;
 
@@ -123,8 +123,8 @@ export default function PopularCategories() {
 
               const isMaroon = index % 2 === 0;
               const isCentered = diff === 0;
-              const translateXVal = diff * 75;
-              const scaleVal = isCentered ? 1 : 0.35;
+              const translateXVal = diff * 78;
+              const scaleVal = isCentered ? 1 : 0.38;
               const opacityVal = isCentered ? 1 : 0.5;
               const filterVal = isCentered ? "blur(0px)" : "blur(4px)";
               const zIndexVal = isCentered ? 30 : 10;
@@ -141,26 +141,28 @@ export default function PopularCategories() {
                     transition:
                       "transform 600ms cubic-bezier(0.25, 1, 0.5, 1), opacity 600ms ease, filter 600ms ease",
                   }}
-                  className={`group absolute top-1/2 left-1/2 w-[82vw] max-w-[320px] sm:max-w-[380px] aspect-[3/4] cursor-pointer rounded-3xl shadow-xl overflow-hidden border-2 transition-all duration-300 bg-white ${
+                  className={`group absolute top-1/2 left-1/2 w-[88vw] max-w-[340px] sm:max-w-[420px] md:max-w-[460px] aspect-[4/5] cursor-pointer rounded-3xl shadow-2xl overflow-hidden border-2 transition-all duration-300 bg-white ${
                     isMaroon
-                      ? "border-[#6B0F1A] shadow-[#6B0F1A]/15"
-                      : "border-[#F7E200] shadow-[#F7E200]/15"
+                      ? "border-[#6B0F1A] shadow-[#6B0F1A]/20"
+                      : "border-[#F7E200] shadow-[#F7E200]/20"
                   }`}
                 >
-                  {/* Full-Length Background Image - 100% Bright & Transparent */}
-                  <Image
-                    src={cat.image}
-                    alt={cat.alt}
-                    fill
-                    quality={90}
-                    sizes="(max-width: 640px) 82vw, 380px"
-                    loading="lazy"
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
+                  {/* Full Image Container - Perfectly Fitted & Uncropped */}
+                  <div className="relative w-full h-full bg-white flex items-center justify-center overflow-hidden">
+                    <Image
+                      src={cat.image}
+                      alt={cat.alt}
+                      fill
+                      quality={95}
+                      sizes="(max-width: 640px) 88vw, (max-width: 1024px) 420px, 460px"
+                      loading="lazy"
+                      className="object-contain p-1.5 sm:p-2 group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+                    />
+                  </div>
 
                   {/* Badge */}
                   {cat.badge && (
-                    <span className="absolute top-3.5 right-3.5 z-20 bg-[#6B0F1A]/90 backdrop-blur-md text-[#FFF6A3] text-xs font-black px-3 py-1 rounded-full shadow-md border border-[#F7E200]/40">
+                    <span className="absolute top-3.5 right-3.5 z-20 bg-[#6B0F1A]/95 backdrop-blur-md text-[#FFF6A3] text-xs font-black px-3 py-1 rounded-full shadow-md border border-[#F7E200]/40">
                       {cat.badge}
                     </span>
                   )}
@@ -168,9 +170,9 @@ export default function PopularCategories() {
                   {/* Clean Translucent Bottom Overlay Bar for Title & Explore Spaces */}
                   <div className="absolute inset-x-3.5 bottom-3.5 z-20">
                     <div
-                      className={`backdrop-blur-md border shadow-lg rounded-2xl p-3 sm:p-3.5 flex flex-col items-center text-center gap-2 transition-all duration-300 ${
+                      className={`backdrop-blur-md border shadow-xl rounded-2xl p-3 sm:p-3.5 flex flex-col items-center text-center gap-2 transition-all duration-300 ${
                         isMaroon
-                          ? "bg-[#6B0F1A]/92 text-white border-white/20"
+                          ? "bg-[#6B0F1A]/95 text-white border-white/20"
                           : "bg-[#F7E200]/95 text-[#6B0F1A] border-[#6B0F1A]/30"
                       }`}
                     >
@@ -181,7 +183,7 @@ export default function PopularCategories() {
 
                       {/* Explore Spaces Action (Bottom) */}
                       <div
-                        className={`w-full py-2 px-3 rounded-xl text-xs font-black transition-all duration-200 shadow-xs flex items-center justify-center gap-1.5 ${
+                        className={`w-full py-2 px-3 rounded-xl text-xs sm:text-sm font-black transition-all duration-200 shadow-xs flex items-center justify-center gap-1.5 ${
                           isMaroon
                             ? "bg-[#F7E200] text-[#6B0F1A] hover:bg-white"
                             : "bg-[#6B0F1A] text-[#FFF6A3] hover:bg-[#3D0710]"
