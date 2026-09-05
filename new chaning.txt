@@ -1,0 +1,129 @@
+﻿================================================================================
+  RACKS ON RENT — REUSABLE STYLING SNIPPETS
+  File: new chaning.txt
+  Purpose: Copy-paste code for recurring UI patterns
+================================================================================
+
+
+────────────────────────────────────────────────────────────────────────────────
+  1. GOLD COLOR HEADING  (e.g. "Better Use of Existing Space")
+     Gold text #B8913A with short yellow underline accent
+────────────────────────────────────────────────────────────────────────────────
+
+  COLOR VALUE:  #B8913A   (Antique Gold — brand token --color-gold-border)
+
+  ── Tailwind JSX ──────────────────────────────────────────────────────────────
+
+    <h2 className="text-[#B8913A] font-bold text-2xl md:text-3xl leading-snug">
+      Better Use of Existing Space
+    </h2>
+    {/* optional short underline accent */}
+    <div className="mt-2 h-[3px] w-10 bg-[#F4E409] rounded-full" />
+
+
+  ── Plain CSS ─────────────────────────────────────────────────────────────────
+
+    .gold-heading {
+      color: #B8913A;
+      font-weight: 700;
+      font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+      line-height: 1.35;
+    }
+
+    /* short yellow underline accent */
+    .gold-heading::after {
+      content: "";
+      display: block;
+      margin-top: 8px;
+      width: 40px;
+      height: 3px;
+      background: #F4E409;
+      border-radius: 9999px;
+    }
+
+
+================================================================================
+
+
+────────────────────────────────────────────────────────────────────────────────
+  2. SIDE-LINE SECTION HEADING  (e.g. "• WHY CHOOSE US? •")
+     Pill badge: Lemon Yellow fill, Deep Maroon border/text,
+     horizontal rules extending on both sides
+────────────────────────────────────────────────────────────────────────────────
+
+  COLORS USED:
+    Background  : #F4E409  (Lemon Yellow)
+    Border      : #6B0F1A  (Deep Maroon)
+    Text        : #3D0710  (Dark Maroon)
+    Line color  : #6B0F1A  (Deep Maroon)
+
+  ── Tailwind JSX ──────────────────────────────────────────────────────────────
+
+    <div className="flex items-center gap-4 w-full">
+      {/* left line */}
+      <div className="flex-1 h-px bg-[#6B0F1A] opacity-40" />
+
+      {/* pill badge */}
+      <span
+        className="
+          px-5 py-2
+          rounded-full
+          border-2 border-[#6B0F1A]
+          bg-[#F4E409]
+          text-[#3D0710] font-bold
+          text-sm md:text-base
+          tracking-widest uppercase
+          whitespace-nowrap
+          select-none
+        "
+      >
+        • WHY CHOOSE US? •
+      </span>
+
+      {/* right line */}
+      <div className="flex-1 h-px bg-[#6B0F1A] opacity-40" />
+    </div>
+
+
+  ── Plain CSS + HTML ──────────────────────────────────────────────────────────
+
+    HTML:
+    <div class="section-heading-row">
+      <div class="side-line"></div>
+      <span class="section-pill">• WHY CHOOSE US? •</span>
+      <div class="side-line"></div>
+    </div>
+
+    CSS:
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .side-line {
+      flex: 1;
+      height: 1px;
+      background-color: #6B0F1A;
+      opacity: 0.4;
+    }
+
+    .section-pill {
+      padding: 0.4rem 1.25rem;
+      border-radius: 9999px;
+      border: 2px solid #6B0F1A;
+      background-color: #F4E409;
+      color: #3D0710;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+
+================================================================================
+  END OF FILE
+================================================================================

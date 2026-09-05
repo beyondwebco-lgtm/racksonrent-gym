@@ -1,16 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
 import HeroStats from "@/components/HeroStats";
-import SpaceSearch from "@/components/SpaceSearch";
-
-import GymSpaceShowcase from "@/components/GymSpaceShowcase";
-import PopularCategories from "@/components/PopularCategories";
-import EnquiryForm from "@/components/EnquiryForm";
-import FAQ from "@/components/FAQ";
-import TrustStrip from "@/components/TrustStrip";
 import ScrollReveal from "@/components/ScrollReveal";
+
+const SpaceSearch = dynamic(() => import("@/components/SpaceSearch"));
+const GymSpaceShowcase = dynamic(() => import("@/components/GymSpaceShowcase"));
+const PopularCategories = dynamic(() => import("@/components/PopularCategories"));
+const HowItWorks = dynamic(() => import("@/components/HowItWorks"));
+const WhyChooseUs = dynamic(() => import("@/components/WhyChooseUs"));
+const EnquiryForm = dynamic(() => import("@/components/EnquiryForm"));
+const FAQ = dynamic(() => import("@/components/FAQ"));
+const TrustStrip = dynamic(() => import("@/components/TrustStrip"));
 
 export default function HomePage() {
   const [selectedRole, setSelectedRole] = useState<"gym-owner" | "wellness" | "general">("gym-owner");
@@ -57,12 +60,21 @@ export default function HomePage() {
       </ScrollReveal>
 
 
+
       <ScrollReveal>
         <GymSpaceShowcase onSelectCategoryAction={handleShowcaseSelect} />
       </ScrollReveal>
 
       <ScrollReveal>
         <PopularCategories />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <HowItWorks />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <WhyChooseUs />
       </ScrollReveal>
 
       <ScrollReveal>

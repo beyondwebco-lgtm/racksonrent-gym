@@ -1,26 +1,26 @@
 export const WHY_CHOOSE_US = [
   {
     id: "verified-spaces",
-    title: "Verified Spaces",
-    description: "All spaces are reviewed for quality and suitability before matching.",
+    title: "Verified Gym Spaces",
+    description: "Gym spaces are reviewed based on location, member footfall, display visibility, cleanliness, and suitability.",
     iconName: "ShieldCheck"
   },
   {
     id: "secure-process",
-    title: "Secure Process",
-    description: "A simple and transparent enquiry and connection process.",
+    title: "Transparent Rentals",
+    description: "Clear rental terms with direct communication between gym owners and participating wellness brands.",
     iconName: "Lock"
   },
   {
     id: "dedicated-support",
-    title: "Dedicated Support",
-    description: "Our team helps both businesses discuss the opportunity.",
+    title: "Dedicated Assistance",
+    description: "Our team supports gym owners and wellness brands in finding suitable spaces and creating smooth display arrangements.",
     iconName: "Headphones"
   },
   {
     id: "grow-your-business",
-    title: "Grow Your Business",
-    description: "Gym owners earn from space while wellness brands reach new customers.",
+    title: "Shared Success",
+    description: "Gym owners earn extra revenue from unused space while wellness brands gain access to active fitness members.",
     iconName: "TrendingUp"
   }
 ];
@@ -29,48 +29,51 @@ export const ROLE_CARDS = [
   {
     id: "gym-owner",
     role: "gym-owner" as const,
-    heading: "I Own a Gym",
-    text: "You have unused space inside your gym such as product racks, wall shelves, reception counters, or nutrition corners.",
+    heading: "I Own a Gym / Fitness Center",
+    text: "You have unused floor racks, shelves, reception counters, nutrition corners, or space inside your fitness facility.",
     benefits: [
-      "Offer an unused rack, shelf, counter, or corner.",
-      "Use existing space efficiently.",
-      "Add value for members.",
-      "Earn additional monthly income."
+      "Monetize unused racks, shelves, or reception corners.",
+      "Offer gym members curated wellness & nutrition products.",
+      "Attract new brand partnerships to elevate your gym.",
+      "Earn steady, hassle-free extra monthly income."
     ],
-    ctaLabel: "List My Space",
+    ctaLabel: "List Your Space",
   },
   {
     id: "wellness",
     role: "wellness" as const,
-    heading: "I Own a Wellness Business",
-    text: "You sell health products, nutrition, supplements, healthy snacks, or fitness accessories and want to reach active customers directly inside gyms.",
+    heading: "I Own a Wellness / Nutrition Brand",
+    text: "You create or sell supplements, apparel, healthy snacks, health drinks, or wellness tech and need physical display space.",
     benefits: [
-      "Place products or services inside gyms.",
-      "Reach the right target audience.",
-      "Reduce retail-space costs.",
-      "Build strong local visibility."
+      "Place products inside trusted gym and fitness centers.",
+      "Reach active, health-conscious fitness enthusiasts.",
+      "Avoid expensive standalone retail leases.",
+      "Build offline brand visibility directly where customers train."
     ],
-    ctaLabel: "Find Gym Space",
+    ctaLabel: "Find Space to Display",
   },
 ];
 
 export const BENEFITS_COMPARISON = {
   gymOwners: {
-    title: "Gym Owners",
+    title: "Gym Owners & Fitness Partners",
     points: [
-      "Earn from unused space",
-      "Improve the gym experience",
-      "Offer useful products to members",
-      "Build local business partnerships",
+      "Earn extra rental income from underutilized display space",
+      "Offer gym members healthy nutrition & wellness choices",
+      "Elevate your gym atmosphere with modern brand displays",
+      "Build valuable long-term wellness brand partnerships",
     ],
   },
   wellnessBusinesses: {
-    title: "Wellness Businesses",
+    title: "Wellness Brands & Nutrition Creators",
     points: [
-      "Access fitness-focused customers",
-      "Start with lower investment",
-      "Promote products directly",
-      "Expand into new locations",
+      "Access high daily health-conscious member footfall",
+      "Start offline gym retail with minimal investment",
+      "Test new supplements, snacks, and apparel collections",
+      "Scale into multiple gym locations seamlessly across India",
     ],
   },
 };
+
+
+

@@ -4,36 +4,31 @@ export interface NavLink {
 }
 
 export const MAIN_NAV_LINKS: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Gym Owners", href: "/for-gym-owners" },
-  { label: "Wellness Businesses", href: "/for-wellness-businesses" },
-  { label: "How It Works", href: "/how-it-works" },
-  { label: "Opportunities", href: "/opportunities" },
-  { label: "Services", href: "/services" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/contact" },
+  { label: "Home", href: "/#hero" },
+  { label: "Opportunities", href: "/#opportunities" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Categories", href: "/#categories" },
+  { label: "Why Choose Us", href: "/#why-choose-us" },
+  { label: "FAQs", href: "/#faq" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export const FOOTER_QUICK_LINKS: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "For Gym Owners", href: "/for-gym-owners" },
-  { label: "For Wellness Businesses", href: "/for-wellness-businesses" },
-  { label: "How It Works", href: "/how-it-works" },
-  { label: "Services Supported", href: "/services" },
-  { label: "Example Opportunities", href: "/opportunities" },
-  { label: "Frequently Asked Questions", href: "/faq" },
-  { label: "Contact & Enquiry", href: "/contact" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Home", href: "/#hero" },
+  { label: "Opportunities", href: "/#opportunities" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Categories", href: "/#categories" },
+  { label: "Why Choose Us", href: "/#why-choose-us" },
+  { label: "FAQs", href: "/#faq" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export const FOOTER_OPPORTUNITY_LINKS: NavLink[] = [
-  { label: "Rack Displays", href: "/opportunities#rack-display" },
-  { label: "Nutrition Corners", href: "/opportunities#nutrition-corner" },
-  { label: "Reception Counters", href: "/opportunities#reception-counter" },
-  { label: "Wellness Kiosks", href: "/opportunities#wellness-kiosk" },
-  { label: "Sampling Areas", href: "/opportunities#sampling-area" },
+  { label: "Product Rack Space", href: "/#opportunities" },
+  { label: "Nutrition Corner Display", href: "/#opportunities" },
+  { label: "Protein Shake Counter", href: "/#opportunities" },
+  { label: "Wall Shelf Display", href: "/#opportunities" },
+  { label: "Reception Counter Space", href: "/#opportunities" },
 ];
 
 export const CONTACT_INFO = {
@@ -41,14 +36,14 @@ export const CONTACT_INFO = {
   phoneFormatted: "+91 79954 24477",
   telLink: "tel:+917995424477",
   whatsappNumber: "917995424477",
-  whatsappLink: "https://wa.me/917995424477?text=Hello%20Racks%20on%20Rent%2C%20I%20would%20like%20to%20know%20more%20about%20your%20gym-space%20opportunities.",
+  whatsappLink: "https://wa.me/917995424477?text=Hello%20Racks%20on%20Rent%2C%20I%20would%20like%20to%20know%20more%20about%20gym%20display%20space%20opportunities.",
   email: "support@racksonrent.com",
-  supportEmail: "support@racksonrent.com",
-  contactEmail: "contact@racksonrent.com",
+  emailContact: "contact@racksonrent.com",
   mailtoLink: "mailto:support@racksonrent.com",
-  supportMailtoLink: "mailto:support@racksonrent.com",
-  contactMailtoLink: "mailto:contact@racksonrent.com",
-  websiteDisplay: "www.racksonrent.com",
-  websiteUrl: "https://www.racksonrent.com",
-  address: "Hyderabad & Vijayawada, India",
+  mailtoContactLink: "mailto:contact@racksonrent.com",
+  websiteDisplay: "gym.racksonrent.com",
+  websiteUrl: "https://gym.racksonrent.com",
+  address: "Pan India",
 };
+
+

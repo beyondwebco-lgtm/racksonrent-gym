@@ -3,106 +3,73 @@ export interface ServiceSupported {
   title: string;
   description: string;
   iconName: string;
-  category: "nutrition" | "beverage" | "consultation" | "display";
+  category: "packaged" | "beverages" | "healthy" | "display";
 }
 
 export const SERVICES_SUPPORTED: ServiceSupported[] = [
   {
-    id: "protein-shakes",
-    title: "Protein Shakes",
-    description: "Post-workout whey, plant protein, and recovery smoothies served fresh or ready-to-drink.",
-    iconName: "Milk",
-    category: "beverage"
+    id: "womens-fashion",
+    title: "Women's Clothing & Boutique Wear",
+    description: "Dresses, tunics, tops, festive wear, and boutique fashion collections.",
+    iconName: "ShoppingBag",
+    category: "packaged"
   },
   {
-    id: "energy-drinks",
-    title: "Energy Drinks",
-    description: "Pre-workout boosters, electrolyte solutions, and sugar-free hydration formulations.",
-    iconName: "Zap",
-    category: "beverage"
+    id: "mens-wear",
+    title: "Men's Apparel & Streetwear",
+    description: "Shirts, jackets, casual wear, and independent men's streetwear labels.",
+    iconName: "Store",
+    category: "packaged"
   },
   {
-    id: "fruit-bowls",
-    title: "Fruit Bowls",
-    description: "Chilled fresh seasonal fruit arrangements packaged cleanly for immediate post-workout nourishment.",
+    id: "ethnic-sarees",
+    title: "Sarees & Traditional Ethnic Wear",
+    description: "Handloom sarees, kurtis, dupattas, and festive traditional ensembles.",
+    iconName: "Sparkles",
+    category: "beverages"
+  },
+  {
+    id: "kids-fashion",
+    title: "Kids' Wear & Apparel",
+    description: "Cute outfits, organic cotton wear, and festive kids' clothing collections.",
     iconName: "Apple",
-    category: "nutrition"
+    category: "healthy"
   },
   {
-    id: "sprouts-salads",
-    title: "Sprouts & Salads",
-    description: "Organic sprouted lentils, high-protein quinoa bowls, and macro-balanced fresh greens.",
-    iconName: "Leaf",
-    category: "nutrition"
+    id: "fashion-accessories",
+    title: "Jewellery & Accessories",
+    description: "Handcrafted earrings, necklaces, scarves, belts, and fashion accessories.",
+    iconName: "HeartHandshake",
+    category: "packaged"
   },
   {
-    id: "diet-guidance",
-    title: "Diet Guidance",
-    description: "Expert macronutrient mapping, fat-loss plans, and muscle-building nutrition advice.",
-    iconName: "BookOpen",
-    category: "consultation"
-  },
-  {
-    id: "meal-plans",
-    title: "Diet Meal Plans",
-    description: "Subscription-based daily meal delivery programs tailored specifically for active gym members.",
-    iconName: "Utensils",
-    category: "nutrition"
-  },
-  {
-    id: "health-supplements",
-    title: "Health Supplements",
-    description: "Multivitamins, omega-3 fish oils, joint health formulas, and immunity wellness products.",
-    iconName: "HeartPulse",
-    category: "display"
-  },
-  {
-    id: "healthy-snacks",
-    title: "Healthy Snacks",
-    description: "High-protein bars, roasted seed mixes, muesli, and low-calorie gourmet fitness treats.",
-    iconName: "Cookie",
-    category: "nutrition"
-  },
-  {
-    id: "sports-nutrition",
-    title: "Sports Nutrition",
-    description: "Endurance gels, intra-workout BCAAs, creatine monohydrate, and specialized performance aids.",
-    iconName: "Trophy",
-    category: "display"
-  },
-  {
-    id: "product-sampling",
-    title: "Product Sampling",
-    description: "Live tasting counters allowing gym members to sample flavors before committing to purchases.",
-    iconName: "Gift",
-    category: "display"
-  },
-  {
-    id: "nutrition-consultations",
-    title: "Nutrition Consultations",
-    description: "One-on-one body composition assessments and personalized wellness coaching sessions.",
-    iconName: "UserCheck",
-    category: "consultation"
-  },
-  {
-    id: "fitness-accessories",
-    title: "Fitness Accessories",
-    description: "Branded shaker bottles, lifting straps, resistance loops, gym towels, and wrist supports.",
+    id: "bags-footwear",
+    title: "Bags, Wallets & Footwear",
+    description: "Handbags, clutches, leather wallets, totes, and designer footwear.",
     iconName: "ShoppingBag",
     category: "display"
   },
   {
-    id: "wellness-product-displays",
-    title: "Wellness-Product Displays",
-    description: "Sleek, eye-level rack and shelf setups showcasing premium health-tech and personal care items.",
+    id: "clothing-racks",
+    title: "Clothing Rack Spaces",
+    description: "Floor-standing rack spaces inside boutiques and retail stores for apparel.",
+    iconName: "Store",
+    category: "display"
+  },
+  {
+    id: "boutique-corners",
+    title: "Boutique Display Corners",
+    description: "Curated display corners with mannequins and lighting inside retail stores.",
     iconName: "Layers",
     category: "display"
   },
   {
-    id: "brand-promotions",
-    title: "Brand Promotions",
-    description: "Targeted banners, standees, digital screen features, and weekend promotional booths inside gyms.",
-    iconName: "Megaphone",
+    id: "window-showcases",
+    title: "Window Display Spaces",
+    description: "Front store window showcase areas attracting street-facing shoppers.",
+    iconName: "Maximize",
     category: "display"
   }
 ];
+
+

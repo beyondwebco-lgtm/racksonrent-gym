@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Playfair_Display } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
@@ -13,53 +13,57 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  display: "swap",
-  style: ["normal", "italic"],
-  weight: ["400", "700"],
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.domain),
-  title: "Racks on Rent | Gym Space for Wellness Brands",
+  title: "Gym Space & Rack Rental for Wellness Brands in India | Racks on Rent",
   description:
-    "Racks on Rent connects gym owners with nutrition, fitness, and wellness businesses looking for simple display-space opportunities inside gyms.",
+    "Racks on Rent connects gym owners with nutrition, fitness, and wellness businesses through simple rack and display-space opportunities.",
   keywords: [
     "Racks on Rent",
-    "Gym space sublet",
-    "Nutrition rack rental",
-    "Gym display space",
-    "Wellness startup expansion",
-    "Supplement rack in gym",
-    "Fitness business opportunity",
-    "Gym monetization"
+    "Gym rack rental",
+    "Gym display space for rent",
+    "Fitness space sublet",
+    "Wellness product display inside gyms",
+    "Protein shake corner rental",
+    "Gym nutrition rack space",
+    "Fitness accessories display space",
+    "Gym space for wellness brands",
+    "Rent gym rack India"
   ],
   authors: [{ name: "Racks on Rent", url: SITE_CONFIG.domain }],
   creator: "Racks on Rent",
   publisher: "Racks on Rent",
   icons: {
-    icon: "/icon.jpeg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
     shortcut: "/favicon.ico",
-    apple: "/apple-icon.jpeg",
+    apple: "/apple-icon.png",
   },
   openGraph: {
-    title: "Racks on Rent | Gym Space for Wellness Brands",
+    title: "Gym Space & Rack Rental for Wellness Brands in India | Racks on Rent",
     description:
-      "Racks on Rent connects gym owners with nutrition, fitness, and wellness businesses looking for simple display-space opportunities inside gyms.",
+      "Racks on Rent connects gym owners with nutrition, fitness, and wellness businesses through simple rack and display-space opportunities.",
     url: SITE_CONFIG.domain,
     siteName: "Racks on Rent",
     images: [
       {
         url: "/opengraph-image.jpeg",
-        width: 1200,
-        height: 630,
-        alt: "Racks on Rent Gym Display Space",
+        width: 1254,
+        height: 1254,
+        alt: "Racks on Rent - Gym Space & Rack Rental for Wellness Brands",
       },
     ],
     locale: "en_IN",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gym Space & Rack Rental for Wellness Brands in India | Racks on Rent",
+    description:
+      "Racks on Rent connects gym owners with nutrition, fitness, and wellness businesses through simple rack and display-space opportunities.",
+    images: ["/opengraph-image.jpeg"],
   },
   robots: {
     index: true,
@@ -84,18 +88,17 @@ export default function RootLayout({
     "@type": "Organization",
     "name": "Racks on Rent",
     "url": SITE_CONFIG.domain,
-    "logo": `${SITE_CONFIG.domain}/images/hero-gym.png`,
-    "description": "Sublet space. Share Success. Connecting gym owners with nutrition and wellness businesses.",
+    "logo": `${SITE_CONFIG.domain}/images/logo.png`,
+    "description": "Sublet Gym Space. Share Success. Connecting gym owners with nutrition, fitness, and wellness businesses.",
     "telephone": "+917995424477",
-    "email": ["support@racksonrent.com", "contact@racksonrent.com"]
+    "email": "support@racksonrent.com"
   };
 
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${playfair.variable} h-full antialiased`}
+      className={`${manrope.variable} h-full antialiased`}
     >
-
       <head>
         <script
           type="application/ld+json"
@@ -112,3 +115,4 @@ export default function RootLayout({
     </html>
   );
 }
+

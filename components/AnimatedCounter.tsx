@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 interface AnimatedCounterProps {
   targetNumber: number;
@@ -15,59 +15,49 @@ export default function AnimatedCounter({
   suffix = "",
   durationMs = 1200,
 }: AnimatedCounterProps) {
-  const [count, setCount] = useState(0);
-  const domRef = useRef<HTMLSpanElement>(null);
+  const [currentNumber, setCurrentNumber] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const el = domRef.current;
-    if (!el) return;
-
-    const isReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (isReduced) {
-      const timer = setTimeout(() => {
-        setCount(targetNumber);
-      }, 0);
-      return () => clearTimeout(timer);
-    }
-
-    let animated = false;
-
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !animated) {
-            animated = true;
-            let startTime: number | null = null;
-
-            const step = (timestamp: number) => {
-              if (!startTime) startTime = timestamp;
-              const progress = Math.min((timestamp - startTime) / durationMs, 1);
-              const easeProgress = 1 - Math.pow(1 - progress, 3);
-              setCount(Math.floor(easeProgress * targetNumber));
-
-              if (progress < 1) {
-                window.requestAnimationFrame(step);
-              } else {
-                setCount(targetNumber);
-              }
-            };
-
-            window.requestAnimationFrame(step);
-            observer.unobserve(entry.target);
-          }
-        });
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     );
 
-    observer.observe(el);
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
     return () => observer.disconnect();
-  }, [targetNumber, durationMs]);
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTimestamp: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / durationMs, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      setCurrentNumber(Math.floor(easeProgress * targetNumber));
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    window.requestAnimationFrame(step);
+  }, [isVisible, targetNumber, durationMs]);
 
   return (
-    <span ref={domRef} className="tabular-nums">
+    <span ref={ref}>
       {prefix}
-      {count}
+      {currentNumber.toLocaleString()}
       {suffix}
     </span>
   );

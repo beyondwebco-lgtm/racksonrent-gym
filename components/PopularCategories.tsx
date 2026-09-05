@@ -1,8 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { POPULAR_CATEGORIES, CategoryItem } from "@/data/categories";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
@@ -10,181 +14,197 @@ export default function PopularCategories() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
-
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
   const totalItems = POPULAR_CATEGORIES.length;
 
-  // Loop forward
   const nextSlide = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % totalItems);
   }, [totalItems]);
 
-  // Loop backward
   const prevSlide = useCallback(() => {
     setActiveIndex((prev) => (prev - 1 + totalItems) % totalItems);
   }, [totalItems]);
 
-  // Autoplay & Hover Control (4.5 Seconds)
+  // Autoplay functionality (every 4.5 seconds)
   useEffect(() => {
     if (isPaused) return;
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
       nextSlide();
     }, 4500);
-    return () => clearInterval(interval);
-  }, [isPaused, nextSlide]);
+    return () => clearInterval(timer);
+  }, [nextSlide, isPaused]);
 
-  // Mobile Touch & Swipe Gestures (40px Threshold)
+  // Swipe support for touch devices
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
+    setTouchStartX(e.targetTouches[0].clientX);
+    setIsPaused(true);
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diffDistance = touchStartX - touchEndX;
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
 
-    if (diffDistance > 40) {
-      nextSlide(); // Swipe Left -> Next
-    } else if (diffDistance < -40) {
-      prevSlide(); // Swipe Right -> Previous
+  const handleTouchEnd = () => {
+    if (touchStartX !== null && touchEndX !== null) {
+      const distance = touchStartX - touchEndX;
+      if (distance > 40) {
+        nextSlide();
+      } else if (distance < -40) {
+        prevSlide();
+      }
     }
     setTouchStartX(null);
+    setTouchEndX(null);
+    setIsPaused(false);
   };
 
-  // Interactive Features & Smooth Scroll
-  const handleCardClick = (diff: number) => {
-    if (diff === 0) {
-      // Clicking active card scrolls to contact section
-      const contactSection = document.getElementById("contact");
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: "smooth" });
+  const handleCategoryClick = (index: number) => {
+    if (index === activeIndex) {
+      const element = document.getElementById("contact");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
       }
-    } else if (diff === 1) {
-      nextSlide();
-    } else if (diff === -1) {
-      prevSlide();
+    } else {
+      setActiveIndex(index);
     }
   };
 
   return (
-    <section className="py-16 sm:py-24 bg-[#FFFDF5] overflow-hidden" id="categories">
+    <section
+      className="py-16 sm:py-24 bg-[#FFFDF5] overflow-hidden"
+      id="categories"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Heading */}
         <SectionHeader
-          badge="Product Placement Categories"
-          title="Popular Categories"
-          subtitle="Explore high-demand product and service categories featured inside gyms across India."
+          badge="POPULAR CATEGORIES"
+          title={
+            <>
+              Popular <span className="text-[#B8913A]">Categories</span>
+            </>
+          }
+          subtitle={
+            <span
+              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="text-lg sm:text-[22px] font-medium not-italic text-[#1F1F1F] leading-relaxed block"
+            >
+              Explore high-demand product and service categories featured inside gyms across India.
+            </span>
+          }
         />
 
-        {/* 3D Coverflow Container */}
-        <div
-          className="relative max-w-6xl mx-auto px-2 sm:px-4"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          {/* Left Arrow Button */}
+        {/* Center-Focused Carousel Container */}
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-12">
+          
+          {/* Previous Arrow Button */}
           <button
             type="button"
             onClick={prevSlide}
             aria-label="Previous category"
-            className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-[#6B0F1A] text-[#FFF6A3] border-2 border-[#F7E200] flex items-center justify-center shadow-xl transition-all cursor-pointer hover:bg-[#3D0710] hover:text-[#F7E200] hover:scale-110 active:scale-95"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#740202] text-[#FAFA33] border-2 border-[#FAFA33] flex items-center justify-center shadow-xl transition-all hover:bg-[#500101] hover:text-[#FAFA33] hover:scale-110 active:scale-95 cursor-pointer"
           >
             <ChevronLeft className="w-6 h-6 stroke-[3]" />
           </button>
 
-          {/* Right Arrow Button */}
+          {/* Next Arrow Button */}
           <button
             type="button"
             onClick={nextSlide}
             aria-label="Next category"
-            className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-[#6B0F1A] text-[#FFF6A3] border-2 border-[#F7E200] flex items-center justify-center shadow-xl transition-all cursor-pointer hover:bg-[#3D0710] hover:text-[#F7E200] hover:scale-110 active:scale-95"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#740202] text-[#FAFA33] border-2 border-[#FAFA33] flex items-center justify-center shadow-xl transition-all hover:bg-[#500101] hover:text-[#FAFA33] hover:scale-110 active:scale-95 cursor-pointer"
           >
             <ChevronRight className="w-6 h-6 stroke-[3]" />
           </button>
 
-          {/* 3D Coverflow Stage */}
-          <div className="relative h-[520px] sm:h-[600px] md:h-[640px] w-full flex items-center justify-center overflow-hidden sm:overflow-visible">
+          {/* Carousel Stage */}
+          <div
+            className="relative h-[520px] sm:h-[560px] flex items-center justify-center touch-pan-y"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             {POPULAR_CATEGORIES.map((cat: CategoryItem, index: number) => {
+              // Calculate relative position with infinite loop wrapping
               let diff = index - activeIndex;
+              if (diff > totalItems / 2) diff -= totalItems;
+              if (diff < -totalItems / 2) diff += totalItems;
 
-              // Handle circular wrapping for continuous loop
-              if (diff > totalItems / 2) {
-                diff -= totalItems;
-              } else if (diff < -totalItems / 2) {
-                diff += totalItems;
-              }
+              const isActive = diff === 0;
+              const isPrev = diff === -1;
+              const isNext = diff === 1;
 
-              // Display only Active (0), Previous (-1), and Next (1) cards
-              if (Math.abs(diff) > 1) {
+              // Hide items further away than prev/next for clean visual focus
+              if (!isActive && !isPrev && !isNext) {
                 return null;
               }
-
-              const isMaroon = index % 2 === 0;
-              const isCentered = diff === 0;
-              const translateXVal = diff * 78;
-              const scaleVal = isCentered ? 1 : 0.38;
-              const opacityVal = isCentered ? 1 : 0.5;
-              const filterVal = isCentered ? "blur(0px)" : "blur(4px)";
-              const zIndexVal = isCentered ? 30 : 10;
 
               return (
                 <div
                   key={cat.id}
-                  onClick={() => handleCardClick(diff)}
+                  onClick={() => handleCategoryClick(index)}
                   style={{
-                    transform: `translate(-50%, -50%) translateX(${translateXVal}%) scale(${scaleVal})`,
-                    opacity: opacityVal,
-                    filter: filterVal,
-                    zIndex: zIndexVal,
+                    transform: isActive
+                      ? "translateX(0%) scale(1)"
+                      : isPrev
+                      ? "translateX(-62%) scale(0.85)"
+                      : "translateX(62%) scale(0.85)",
+                    opacity: isActive ? 1 : 0.4,
+                    filter: isActive ? "blur(0px)" : "blur(2px)",
+                    zIndex: isActive ? 10 : 1,
                     transition:
-                      "transform 600ms cubic-bezier(0.25, 1, 0.5, 1), opacity 600ms ease, filter 600ms ease",
+                      "transform 600ms ease, opacity 600ms ease, filter 600ms ease",
                   }}
-                  className={`group absolute top-1/2 left-1/2 w-[88vw] max-w-[340px] sm:max-w-[420px] md:max-w-[460px] aspect-[4/5] cursor-pointer rounded-3xl shadow-2xl overflow-hidden border-2 transition-all duration-300 bg-white ${
-                    isMaroon
-                      ? "border-[#6B0F1A] shadow-[#6B0F1A]/20"
-                      : "border-[#F7E200] shadow-[#F7E200]/20"
+                  className={`absolute w-[260px] xs:w-[290px] sm:w-[360px] cursor-pointer select-none rounded-3xl border-2 bg-[#FFFDF5] p-4 sm:p-6 shadow-2xl flex flex-col justify-between overflow-hidden group ${
+                    isActive
+                      ? "border-[#740202] shadow-[0_20px_50px_rgba(116,2,2,0.22)]"
+                      : "border-[#740202]/20 pointer-events-auto hover:opacity-75"
                   }`}
                 >
-                  {/* Full Image Container - Perfectly Fitted & Uncropped */}
-                  <div className="relative w-full h-full bg-white flex items-center justify-center overflow-hidden">
-                    <Image
-                      src={cat.image}
-                      alt={cat.alt}
-                      fill
-                      quality={95}
-                      sizes="(max-width: 640px) 88vw, (max-width: 1024px) 420px, 460px"
-                      loading="lazy"
-                      className="object-contain p-1.5 sm:p-2 group-hover:scale-[1.03] transition-transform duration-500 ease-out"
-                    />
+                  <div>
+                    {/* Badge */}
+                    {cat.badge && (
+                      <span className="inline-block rounded-full bg-[#FAFA33] px-3.5 py-1 text-sm font-bold text-[#740202] border border-[#F0E2E4] mb-3">
+                        {cat.badge}
+                      </span>
+                    )}
+
+                    {/* Image Container */}
+                    <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-[#F8F8FA] border border-[#F0E2E4] mb-4 flex items-center justify-center">
+                      <Image
+                        src={cat.image}
+                        alt={cat.alt}
+                        fill
+                        sizes="(max-width: 640px) 290px, 360px"
+                        priority={isActive}
+                        loading={isActive ? "eager" : "lazy"}
+                        className="object-contain sm:object-cover object-center transition-transform duration-500 hover:scale-105"
+                      />
+                    </div>
+
+                    {/* Content */}
+                    <div className="px-1">
+                      <h3
+                        style={{ fontFamily: "'Playfair Display', serif" }}
+                        className="font-semibold italic text-base sm:text-lg text-[#740202] group-hover:text-[#B8913A] transition-colors duration-300 leading-relaxed mb-2 whitespace-normal break-words"
+                      >
+                        {cat.name}
+                      </h3>
+
+                      <p
+                        style={{ fontFamily: "'Playfair Display', serif" }}
+                        className="text-sm sm:text-base text-[#1F1F1F] leading-relaxed font-medium line-clamp-2"
+                      >
+                        {cat.description}
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Badge */}
-                  {cat.badge && (
-                    <span className="absolute top-3.5 right-3.5 z-20 bg-[#6B0F1A]/95 backdrop-blur-md text-[#FFF6A3] text-xs font-black px-3 py-1 rounded-full shadow-md border border-[#F7E200]/40">
-                      {cat.badge}
-                    </span>
-                  )}
-
-                  {/* Bottom Overlay for Title & Explore Spaces */}
-                  <div className="absolute inset-x-3 bottom-3.5 z-20 flex flex-col items-center text-center gap-1.5 pointer-events-none">
-                    {/* Main Title (Top - Decreased size, clean text without colored box) */}
-                    <h3 className="font-black text-xs sm:text-sm text-[#1F1F1F] bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full border border-[#F0E2E4] shadow-xs leading-tight line-clamp-1 pointer-events-auto">
-                      {cat.name}
-                    </h3>
-
-                    {/* Explore Spaces Action (Bottom - Compact with background color) */}
-                    <div
-                      className={`pointer-events-auto py-1.5 px-3.5 rounded-full text-[10px] sm:text-xs font-black transition-all duration-200 shadow-md flex items-center justify-center gap-1 cursor-pointer ${
-                        isMaroon
-                          ? "bg-[#6B0F1A] text-[#FFF6A3] border border-[#F7E200]/40 hover:bg-[#3D0710] hover:text-[#F7E200]"
-                          : "bg-[#3D0710] text-[#F7E200] border border-[#F7E200]/30 hover:bg-[#6B0F1A]"
-                      }`}
-                    >
-                      <span>Explore Spaces</span>
-                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                    </div>
+                  {/* Card Footer CTA */}
+                  <div className="mt-5 pt-3 border-t border-[#F0E2E4] px-1 flex items-center justify-between text-sm sm:text-base font-bold text-[#740202] group-hover:text-[#B8913A] transition-colors duration-300">
+                    <span>Explore Spaces</span>
+                    <ArrowRight className="w-4.5 h-4.5" />
                   </div>
                 </div>
               );
@@ -192,21 +212,22 @@ export default function PopularCategories() {
           </div>
 
           {/* Pagination Indicators */}
-          <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8">
-            {POPULAR_CATEGORIES.map((_, idx) => (
+          <div className="flex justify-center items-center gap-2 mt-6">
+            {POPULAR_CATEGORIES.map((_, index) => (
               <button
-                key={idx}
+                key={index}
                 type="button"
-                onClick={() => setActiveIndex(idx)}
-                aria-label={`Go to slide ${idx + 1}`}
-                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  activeIndex === idx
-                    ? "w-8 bg-[#6B0F1A]"
-                    : "w-2.5 bg-[#6B0F1A]/25 hover:bg-[#6B0F1A]/50"
+                onClick={() => setActiveIndex(index)}
+                aria-label={`Go to slide ${index + 1}`}
+                className={`transition-all duration-300 rounded-full cursor-pointer ${
+                  index === activeIndex
+                    ? "w-8 h-2.5 bg-[#740202]"
+                    : "w-2.5 h-2.5 bg-[#F0E2E4] hover:bg-[#740202]/50"
                 }`}
               />
             ))}
           </div>
+
         </div>
 
       </div>
